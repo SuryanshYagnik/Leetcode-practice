@@ -1,24 +1,24 @@
 class Solution {
 public:
-    int distance(vector<int> c) {
+    int distance(const vector<int>& c) {
         int x = c[0], y = c[1];
-        return ((x * x) + (y * y));
+        return x * x + y * y;
     }
 
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-        vector<vector<int>> ans;
         int n = points.size();
-        priority_queue<pair<int, vector<int>>> pq;
+        priority_queue<pair<int, int>> pq;
 
         for (int i = 0; i < n; i++) {
             int dis = distance(points[i]);
-            pq.push({dis, points[i]});
+            pq.push({dis, i});
             if (pq.size() > k)
                 pq.pop();
         }
 
-        while(!pq.empty()) {
-            ans.push_back(pq.top().second);
+        vector<vector<int>> ans;
+        while (!pq.empty()) {
+            ans.push_back(points[pq.top().second]);
             pq.pop();
         }
         return ans;
